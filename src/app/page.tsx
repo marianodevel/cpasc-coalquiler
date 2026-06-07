@@ -1,16 +1,35 @@
 import { createClient } from "@/lib/supabase/server";
-import LogoutButton from "@/components/auth/LogoutButton";
+import AvisosListado from "@/components/avisos/AvisosListado";
+import type { Aviso } from "@/types";
 
 export default async function HomePage() {
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+
+  const { data: avisos, error } = await supabase
+    .from("avisos")
+    .select("*, profiles(nombre_apellido)")
+    .eq("estado", "aprobado")
+    .order("publicado_en", { ascending: false });
+
+  const { count: disponibles } = await supabase
+    .from("avisos")
+    .select("*", { count: "exact", head: true })
+    .eq("estado", "aprobado")
+    .eq("tipo_aviso", "ofrece");
+
+  const { count: buscando } = await supabase
+    .from("avisos")
+    .select("*", { count: "exact", head: true })
+    .eq("estado", "aprobado")
+    .eq("tipo_aviso", "busca");
 
   return (
-    <main className="p-8">
-      <p>{user?.email ?? "Sin sesión"}</p>
-      {user && <LogoutButton />}
-    </main>
+    <AvisosListado
+      avisos={(avisos as Aviso[]) ?? []}
+      stats={{
+        disponibles: disponibles ?? 0,
+        buscando: buscando ?? 0,
+      }}
+    />
   );
 }
