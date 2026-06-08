@@ -41,6 +41,11 @@ export default async function AdminPage() {
     .order("created_at", { ascending: false })
     .limit(100);
 
+  const avisosNormalizados = (avisos ?? []).map((a) => ({
+    ...a,
+    profiles: Array.isArray(a.profiles) ? (a.profiles[0] ?? null) : a.profiles,
+  }));
+
   return (
     <main className="max-w-6xl mx-auto px-4 py-8">
       <div className="mb-8 flex items-center justify-between">
@@ -60,7 +65,7 @@ export default async function AdminPage() {
           Gestionar usuarios →
         </a>
       </div>
-      <PanelMod avisos={avisos ?? []} />
+      <PanelMod avisos={avisosNormalizados} />
     </main>
   );
 }

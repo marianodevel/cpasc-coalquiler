@@ -6,15 +6,15 @@ import { LOCALIDADES } from "@/types";
 // ------------------------------------------------------------
 export const avisoSchema = z.object({
   tipo_aviso: z.enum(["ofrece", "busca"], {
-    required_error: "Seleccioná un tipo de aviso",
+    error: "Seleccioná un tipo de aviso",
   }),
 
   tipo_espacio: z.enum(["Oficina privada", "Cowork", "Escritorio"], {
-    required_error: "Seleccioná el tipo de espacio",
+    error: "Seleccioná el tipo de espacio",
   }),
 
   localidad: z.enum(LOCALIDADES, {
-    required_error: "Seleccioná una localidad",
+    error: "Seleccioná una localidad",
   }),
 
   titulo: z
@@ -37,11 +37,11 @@ export const avisoSchema = z.object({
   folio: z.string().optional(),
 
   acepta_ddjj: z.literal(true, {
-    errorMap: () => ({ message: "Debés firmar la declaración jurada" }),
+    error: "Debés firmar la declaración jurada",
   }),
 
   acepta_tyc: z.literal(true, {
-    errorMap: () => ({ message: "Debés aceptar los términos y condiciones" }),
+    error: "Debés aceptar los términos y condiciones",
   }),
 });
 

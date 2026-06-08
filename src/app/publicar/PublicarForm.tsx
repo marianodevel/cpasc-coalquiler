@@ -41,7 +41,8 @@ export default function PublicarForm({ perfilId, datosIniciales }: Props) {
     defaultValues: {
       tipo_aviso: undefined,
       tipo_espacio: undefined,
-      localidad: datosIniciales.localidad || undefined,
+      localidad:
+        (datosIniciales.localidad as import("@/types").Localidad) || undefined,
       tomo: datosIniciales.tomo,
       folio: datosIniciales.folio,
       caracteristicas: [],

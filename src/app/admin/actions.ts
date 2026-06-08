@@ -16,7 +16,8 @@ export async function moderarAviso(
   // 1. Validar con Zod
   const parsed = moderacionSchema.safeParse(data);
   if (!parsed.success) {
-    const mensaje = parsed.error.errors[0]?.message ?? "Datos inválidos";
+    const mensaje = parsed.error.issues[0]?.message ?? "Datos inválidos";
+
     return { success: false, error: mensaje };
   }
 
