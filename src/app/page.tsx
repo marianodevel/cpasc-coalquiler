@@ -5,7 +5,7 @@ import type { Aviso } from "@/types";
 export default async function HomePage() {
   const supabase = createClient();
 
-  const { data: avisos, error } = await supabase
+  const { data: avisos } = await supabase
     .from("avisos")
     .select("*, profiles(nombre_apellido)")
     .eq("estado", "aprobado")

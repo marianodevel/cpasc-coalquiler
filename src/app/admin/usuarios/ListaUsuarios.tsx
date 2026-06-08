@@ -136,7 +136,7 @@ export default function ListaUsuarios({
                 </td>
               </tr>
             ) : (
-              filtrados.map((u, i) => (
+              filtrados.map((u) => (
                 <tr
                   key={u.id}
                   className={`border-b border-gray-100 last:border-0 ${
